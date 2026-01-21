@@ -10,6 +10,7 @@
         android:required="false" />
 
     <application
+        android:name="com.securemessenger.SecureMessenger"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SecureMessenger">
         <activity
-            android:name=".MainActivity"
+            android:name="com.securemessenger.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SecureMessenger">
