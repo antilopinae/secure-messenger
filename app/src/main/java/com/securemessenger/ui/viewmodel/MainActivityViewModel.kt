@@ -2,7 +2,6 @@ package com.securemessenger.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.securemessenger.data.model.UserModel
 import com.securemessenger.ui.component.SnackBarState
 import com.securemessenger.ui.event.MainScreenAction
 import com.securemessenger.ui.event.MainScreenEvent
@@ -16,7 +15,6 @@ class MainActivityViewModel : ViewModel() {
     private val _snackBarState = MutableStateFlow(SnackBarState())
     private val _mainScreenEvent = MutableStateFlow(
         MainScreenEvent(
-            currentUser = UserModel()
         )
     )
     private val _isLoading = MutableStateFlow(false)

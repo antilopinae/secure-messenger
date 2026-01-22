@@ -215,7 +215,7 @@ fun SendChatItem(item: MessageModel) {
                 .align(Alignment.CenterEnd)
         ) {
             Text(
-                text = item.text ?: "",
+                text = item.id ?: "",
                 color = Color.Black,
                 textAlign = TextAlign.End,
                 modifier = Modifier
@@ -225,7 +225,7 @@ fun SendChatItem(item: MessageModel) {
             )
             HeightSpacer(height = 5.dp)
             Text(
-                text = formatTimestamp(item.timeStamp ?: 0L),
+                text = formatTimestamp(item.timestamp ?: 0L),
                 color = Color.Gray,
                 fontSize = 8.sp,
                 textAlign = TextAlign.Start,
@@ -252,7 +252,7 @@ fun ReceiveChatItem(item: MessageModel) {
                 .align(Alignment.CenterStart)
         ) {
             Text(
-                text = item.text ?: "",
+                text = item.id ?: "",
                 color = Color.Black,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
@@ -264,7 +264,7 @@ fun ReceiveChatItem(item: MessageModel) {
             HeightSpacer(height = 5.dp)
 
             Text(
-                text = formatTimestamp(item.timeStamp ?: 0L),
+                text = formatTimestamp(item.timestamp ?: 0L),
                 color = Color.Gray,
                 fontSize = 8.sp,
                 textAlign = TextAlign.End,

@@ -41,9 +41,6 @@ fun OnboardingNavigation(/*onboardingViewModel: OnboardingViewModel*/) {
             composable(
                 route = OnboardingNavigationObject.ONBOARDING_SCREEN
             ) {
-//                OnboardingScreen(
-//                    navController
-//                )
             }
             composable(
                 route = OnboardingNavigationObject.LOGIN_SCREEN
@@ -62,36 +59,5 @@ fun OnboardingNavigation(/*onboardingViewModel: OnboardingViewModel*/) {
 //                )
             }
         }
-
-//        LaunchedEffect(key1 = snackBarState.show) {
-//            scope.launch {
-//                if (snackBarState.show){
-//                    snackBarHostState.showSnackbar(
-//                        message = snackBarState.message,
-//                        if(snackBarState.isError) "Error" else "Success",
-//                        duration = SnackbarDuration.Short
-//                    )
-//                }
-//
-//            }
-//        }
-
-//        if (onboardingViewModel.isLoading.collectAsState().value){
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .background(Color.Black.copy(alpha = 0.4f)),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
-//            ) {
-//                CircularProgressIndicator(
-//                    modifier = Modifier.size(200.dp),
-//                    strokeCap = StrokeCap.Round,
-//                    strokeWidth = 8.dp,
-//                    trackColor = Color.White
-//                )
-//            }
-//        }
-
     }
 }

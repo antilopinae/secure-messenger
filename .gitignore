@@ -20,3 +20,9 @@ go-core/pkg/test/test-main
 
 app/libs/gobackend.aar
 app/libs/gobackend-sources.jar
+
+collect_kotlin.py
+all_kotlin_sources.txt
+
+'Markdown to PDF.pdf'
+secure_messenger.pages

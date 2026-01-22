@@ -33,7 +33,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.securemessenger.R
-import com.securemessenger.data.model.UserModel
 import com.securemessenger.ui.navigation.MainActivityNavigationNames
 import com.securemessenger.ui.component.HeightSpacer
 import com.securemessenger.ui.component.ImageCircle
@@ -122,7 +121,7 @@ fun MainScreen(
 }
 
 @Composable
-fun ChatItem(userItem: UserModel, onClick: () -> Unit) {
+fun ChatItem(userItem: String, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -155,7 +154,7 @@ fun ChatItem(userItem: UserModel, onClick: () -> Unit) {
                         .padding(top = 10.dp)
                 ) {
                     Text(
-                        text = userItem.userName ?: "",
+                        text = userItem ?: "",
                         fontSize = 20.sp,
                         color = White
                     )
