@@ -27,10 +27,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.securemessenger.R
 
-import com.securemessenger.ui.component.HeightSpacer
-import com.securemessenger.ui.component.ThemeSolidButton
-import com.securemessenger.ui.component.WidthSpacer
-
 @Composable
 fun LoginScreen(navController: NavHostController/*, action: (OnboardingEvents) -> Unit*/) {
     BoxWithConstraints(
@@ -69,28 +65,11 @@ fun LoginScreen(navController: NavHostController/*, action: (OnboardingEvents) -
                         .offset(x = -(20.dp))
                 )
 
-                HeightSpacer()
-
                 Text(
                     text = "Sign in to pick up right where you left off.",
                     color = Color.White,
                     fontSize = 12.sp
                 )
-
-                HeightSpacer(height = 60.dp)
-
-//                MobileNumberTextField(
-//                    label = "Mobile Number",
-//                    value = userModel.mobileNumber ?: ""
-//                ) {
-//                    if (it.isDigitsOnly() && it.length <= 10) {
-//                        userModel = userModel.copy(
-//                            mobileNumber = it
-//                        )
-//                    }
-//                }
-
-                HeightSpacer(height = 20.dp)
 
                 Text(
                     text = "Create an account!",
@@ -99,32 +78,6 @@ fun LoginScreen(navController: NavHostController/*, action: (OnboardingEvents) -
                     textAlign = TextAlign.End,
                     modifier = Modifier.fillMaxWidth()
                 )
-
-                HeightSpacer(height = 20.dp)
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-
-                    WidthSpacer(width = 20.dp)
-                    ThemeSolidButton(
-                        text = "Send Otp",
-                        modifier = Modifier
-                            .fillMaxWidth(fraction = 0.6f)
-                    ) {
-//                        if (userModel.mobileNumber?.length == 10) {
-//                            action(OnboardingEvents.LoginUpClick(userModel) { status ->
-//                                if (status) {
-//                                    navController.navigate(OnboardingNavigationObject.OTP_SCREEN)
-//                                }
-//                            })
-//                        }
-                    }
-
-                    HeightSpacer(height = 20.dp)
-                }
             }
         }
     }

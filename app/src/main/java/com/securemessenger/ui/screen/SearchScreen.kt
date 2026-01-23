@@ -24,8 +24,6 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.securemessenger.ui.component.HeightSpacer
-import com.securemessenger.ui.component.WidthSpacer
 
 @Composable
 fun SearchScreen() {
@@ -52,8 +50,6 @@ fun SearchScreen() {
                     tint = White
                 )
 
-                WidthSpacer()
-
                 Text(text = "Search", color = White, fontSize = 20.sp)
             }
         }
@@ -75,8 +71,6 @@ fun SearchScreen() {
             }
         )
 
-        HeightSpacer(height = 20.dp)
-
         LazyColumn(
             reverseLayout = false,
             modifier = Modifier
@@ -84,7 +78,6 @@ fun SearchScreen() {
                 .weight(1f)
         ) {
             items(3) {
-//                ChatItem(userItem)
             }
         }
     }

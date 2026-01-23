@@ -1,10 +1,15 @@
 package com.securemessenger.data.model
 
-data class MessageModel(
+data class Message(
     val id: String,
     val senderId: String,
-    val senderName: String,
     val timestamp: Long,
+    val data: MutableList<Byte>
+)
+
+data class MessageModel(
+    val transportInfo: Message,
+    val senderName: String?,
     val state: MessageState
 )
 

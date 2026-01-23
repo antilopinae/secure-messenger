@@ -31,20 +31,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.securemessenger.R
 import com.securemessenger.data.model.MessageModel
-import com.securemessenger.ui.component.HeightSpacer
-import com.securemessenger.ui.component.WidthSpacer
 import com.securemessenger.ui.event.MainScreenAction
-import com.securemessenger.ui.event.MainScreenEvent
 import androidx.compose.ui.tooling.preview.Preview
-import com.securemessenger.ui.component.ImageCircle
-import com.securemessenger.ui.util.formatTimestamp
 
 @Composable
 fun ChatScreen(
@@ -87,25 +78,7 @@ fun ChatScreen(
                             backDispatcher?.onBackPressedDispatcher?.onBackPressed()
                         }
                     )
-
-                    WidthSpacer()
-
-//                    ImageCircle(size = 45.dp)
-
-                    WidthSpacer(width = 15.dp)
-
-//                    Text(
-//                        text = mainScreenEvent.value.selectedUser?.userName ?: "",
-//                        color = White,
-//                        fontSize = 20.sp
-//                    )
                 }
-
-//                Icon(
-//                    painter = painterResource(id = R.drawable.dot_menu_icon),
-//                    contentDescription = "",
-//                    tint = White
-//                )
             }
 
             HorizontalDivider(
@@ -120,17 +93,6 @@ fun ChatScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-//            mainScreenEvent.value.messagesList?.forEach { item ->
-//                if (item.senderId == mainScreenEvent.value.currentUser?.userId) {
-//                    item {
-//                        SendChatItem(item)
-//                    }
-//                } else {
-//                    item {
-//                        ReceiveChatItem(item)
-//                    }
-//                }
-//            }
         }
 
         Column(
@@ -168,8 +130,6 @@ fun ChatScreen(
                     }
                 )
 
-                WidthSpacer()
-
                 Button(
                     onClick = {
                         action(MainScreenAction.SendMessage(messageText.value) {
@@ -187,13 +147,6 @@ fun ChatScreen(
                     contentPadding = PaddingValues(10.dp),
                     shape = RoundedCornerShape(15.dp)
                 ) {
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.send_icon),
-//                        contentDescription = "",
-//                        tint = Color.Black,
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                    )
                 }
             }
         }
@@ -209,31 +162,6 @@ fun SendChatItem(item: MessageModel) {
     ) {
         constraints
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(fraction = 0.8f)
-                .align(Alignment.CenterEnd)
-        ) {
-            Text(
-                text = item.id ?: "",
-                color = Color.Black,
-                textAlign = TextAlign.End,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = White, shape = RoundedCornerShape(10.dp))
-                    .padding(vertical = 15.dp, horizontal = 10.dp)
-            )
-            HeightSpacer(height = 5.dp)
-            Text(
-                text = formatTimestamp(item.timestamp ?: 0L),
-                color = Color.Gray,
-                fontSize = 8.sp,
-                textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .padding(start = 5.dp)
-            )
-        }
-
     }
 }
 
@@ -246,33 +174,6 @@ fun ReceiveChatItem(item: MessageModel) {
     ) {
         constraints
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(fraction = 0.8f)
-                .align(Alignment.CenterStart)
-        ) {
-            Text(
-                text = item.id ?: "",
-                color = Color.Black,
-                textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Gray, shape = RoundedCornerShape(10.dp))
-                    .padding(vertical = 15.dp, horizontal = 10.dp)
-            )
-
-            HeightSpacer(height = 5.dp)
-
-            Text(
-                text = formatTimestamp(item.timestamp ?: 0L),
-                color = Color.Gray,
-                fontSize = 8.sp,
-                textAlign = TextAlign.End,
-                modifier = Modifier
-                    .padding(end = 5.dp)
-                    .fillMaxWidth()
-            )
-        }
     }
 }
 

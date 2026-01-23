@@ -1,6 +1,5 @@
 package com.securemessenger.ui.screen
 
-import com.securemessenger.ui.component.WidthSpacer
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,8 +27,6 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.securemessenger.ui.component.HeightSpacer
-import com.securemessenger.ui.component.ImageCircle
 
 @Composable
 fun ProfileScreen() {
@@ -58,8 +55,6 @@ fun ProfileScreen() {
                     tint = White
                 )
 
-                WidthSpacer()
-
                 Text(text = "Profile", color = White, fontSize = 20.sp)
             }
 
@@ -69,12 +64,6 @@ fun ProfileScreen() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-//                ImageCircle(
-//                    size = 120.dp
-//                )
-
-                WidthSpacer(width = 20.dp)
-
                 Column(
                     modifier = Modifier,
                     horizontalAlignment = Alignment.Start,
@@ -82,11 +71,7 @@ fun ProfileScreen() {
                 ) {
                     Text(text = "Julie Mozal", fontSize = 20.sp, color = White)
 
-                    HeightSpacer(height = 5.dp)
-
                     Text(text = "+145634562", fontSize = 15.sp, color = Color.Gray)
-
-                    HeightSpacer(height = 5.dp)
 
                     Button(
                         onClick = {},

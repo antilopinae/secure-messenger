@@ -1,6 +1,5 @@
 package com.securemessenger.ui.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -14,9 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -28,17 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.securemessenger.R
-import com.securemessenger.ui.navigation.MainActivityNavigationNames
-import com.securemessenger.ui.component.HeightSpacer
-import com.securemessenger.ui.component.ImageCircle
-import com.securemessenger.ui.component.WidthSpacer
 import com.securemessenger.ui.event.MainScreenAction
-import com.securemessenger.ui.event.MainScreenEvent
 
 @Composable
 fun MainScreen(
@@ -63,22 +52,12 @@ fun MainScreen(
                     .fillMaxWidth()
                     .padding(20.dp)
             ) {
-                HeightSpacer()
                 Text(
                     text = "Chat-U",
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     color = White
                 )
-
-//                Image(
-//                    painter = painterResource(id = R.drawable.person_icon),
-//                    contentDescription = "",
-//                    modifier = Modifier
-//                        .size(40.dp)
-//                        .background(color = White, shape = CircleShape)
-//                        .padding(5.dp)
-//                )
             }
 
             Text(
@@ -88,20 +67,6 @@ fun MainScreen(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
             )
-
-            HeightSpacer()
-
-//            mainScreenEvent.value.userList?.let { list ->
-//                LazyColumn {
-//                    items(list.size) { index ->
-//                        val userItem = list[index]
-//                        ChatItem(userItem) {
-//                            action(MainScreenAction.SelectUser(userItem))
-//                            navController.navigate(MainActivityNavigationNames.CHAT_SCREEN)
-//                        }
-//                    }
-//                }
-//            }
         }
 
         FloatingActionButton(
@@ -142,10 +107,6 @@ fun ChatItem(userItem: String, onClick: () -> Unit) {
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier
             ) {
-//                ImageCircle()
-
-                WidthSpacer(width = 20.dp)
-
                 Column(
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.Top,
@@ -158,8 +119,6 @@ fun ChatItem(userItem: String, onClick: () -> Unit) {
                         fontSize = 20.sp,
                         color = White
                     )
-
-                    HeightSpacer(height = 10.dp)
 
                     Text(
                         text = "Hey, What's Up?",
