@@ -25,7 +25,6 @@ fun OnboardingNavigation(/*onboardingViewModel: OnboardingViewModel*/) {
     val snackBarHostState = remember {
         SnackbarHostState()
     }
-//    val snackBarState by onboardingViewModel.snackBarState.collectAsState()
 
     Scaffold(
         snackbarHost = {

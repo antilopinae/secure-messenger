@@ -11,6 +11,5 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val DeepBlack = Color(0xFF000000)
-val SurfaceGray = Color(0xFF121212)
 val AccentCyan = Color(0xFF00E5FF)
-val TextSecondary = Color(0xFF8E8E8E)
+val SurfaceGray = Color(0xFF121212)
