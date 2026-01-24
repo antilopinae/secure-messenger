@@ -1,23 +1,29 @@
 package com.securemessenger.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
-import com.securemessenger.ui.event.MainScreenAction
-import com.securemessenger.ui.event.MainScreenEvent
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import androidx.lifecycle.*
+import com.securemessenger.data.db.*
+import com.securemessenger.ui.event.*
+import dagger.hilt.android.lifecycle.*
+import kotlinx.coroutines.flow.*
+import javax.inject.*
 
-class MainActivityViewModel : ViewModel() {
-    private val _mainScreenEvent = MutableStateFlow(
-        MainScreenEvent(
+@HiltViewModel
+class MainActivityViewModel @Inject constructor(
+    private val dao: ChatDao
+) : ViewModel() {
+    val mainScreenEvent: StateFlow<MainScreenEvent> = dao.getAllChats()
+        .map { chats ->
+            MainScreenEvent(
+                userList = chats.map { it.chatName }.toMutableList()
+            )
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = MainScreenEvent(userList = mutableListOf())
         )
-    )
-    private val _isLoading = MutableStateFlow(false)
-
-    val mainScreenEvent: StateFlow<MainScreenEvent> = _mainScreenEvent.asStateFlow()
 
     fun action(event: MainScreenAction) {
-        _isLoading.value = true
         when (event) {
             is MainScreenAction.SelectUser -> {}
             is MainScreenAction.SendMessage -> {}

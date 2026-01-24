@@ -1,11 +1,11 @@
 package com.securemessenger.ui.navigation
 
 import androidx.compose.runtime.*
+import androidx.navigation.*
 import androidx.navigation.compose.*
-import com.securemessenger.ui.component.CustomDrawerWrapper
-import com.securemessenger.ui.component.DrawerMenuContent
+import com.securemessenger.ui.component.*
 import com.securemessenger.ui.screen.*
-import com.securemessenger.ui.viewmodel.MainActivityViewModel
+import com.securemessenger.ui.viewmodel.*
 
 @Composable
 fun AppNavigation(viewModel: MainActivityViewModel) {
@@ -38,7 +38,10 @@ fun AppNavigation(viewModel: MainActivityViewModel) {
                     )
                 }
 
-                composable(Screen.Chat.route) {
+                composable(
+                    route = Screen.Chat.route,
+                    arguments = listOf(navArgument("chatId") { type = NavType.StringType })
+                ) {
                     ChatScreen(
                         onBack = { navController.popBackStack() }
                     )

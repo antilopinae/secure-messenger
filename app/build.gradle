@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    id("kotlin-kapt")
 }
 
 task buildGoMobile(type: Exec) {
@@ -18,7 +20,7 @@ task buildGoMobile(type: Exec) {
 }
 
 android {
-    namespace 'com.securemessenger'
+    namespace = 'com.securemessenger'
     compileSdk {
         version = release(36)
     }
@@ -47,7 +49,7 @@ android {
         jvmTarget = '11'
     }
     buildFeatures {
-        compose true
+        compose = true
     }
 }
 
@@ -64,7 +66,21 @@ dependencies {
     implementation libs.androidx.compose.material.icons.extended
 
     implementation libs.androidx.navigation.compose
-    implementation libs.androidx.hilt.navigation.compose
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+
+    implementation(libs.sqlite)
+    implementation(libs.sqlite.framework)
+
+    implementation(libs.sqlcipher.android)
+
+    implementation libs.hilt.android
+    implementation libs.hilt.compose
+    kapt(libs.hilt.compiler)
+
+    implementation libs.javapoet
 
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
