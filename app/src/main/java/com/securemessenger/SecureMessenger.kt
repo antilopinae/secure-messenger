@@ -1,14 +1,21 @@
 package com.securemessenger
 
 import android.app.*
-import dagger.hilt.android.*
+import com.securemessenger.di.appModule
 import net.zetetic.database.sqlcipher.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext.startKoin
 
-@HiltAndroidApp
+//@HiltAndroidApp
 class SecureMessenger : Application() {
     override fun onCreate() {
         super.onCreate()
         initializeSQLCipher();
+
+        startKoin {
+            androidContext(this@SecureMessenger)
+            modules(appModule)
+        }
     }
 
     private fun initializeSQLCipher() {

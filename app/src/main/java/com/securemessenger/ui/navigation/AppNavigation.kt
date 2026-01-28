@@ -40,10 +40,14 @@ fun AppNavigation(viewModel: MainActivityViewModel) {
 
                 composable(
                     route = Screen.Chat.route,
-                    arguments = listOf(navArgument("chatId") { type = NavType.StringType })
+                    arguments = listOf(
+                        navArgument("chatId") { type = NavType.StringType }
+                    )
                 ) {
                     ChatScreen(
-                        onBack = { navController.popBackStack() }
+                        onBack = {
+                            navController.popBackStack()
+                        }
                     )
                 }
             }

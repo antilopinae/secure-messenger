@@ -3,9 +3,7 @@ package com.securemessenger.ui.viewmodel
 import androidx.lifecycle.*
 import com.securemessenger.data.db.*
 import com.securemessenger.data.model.*
-import dagger.hilt.android.lifecycle.*
 import kotlinx.coroutines.flow.*
-import javax.inject.*
 
 data class ChatState(
     val messages: List<MessageModel> = emptyList(),
@@ -19,8 +17,7 @@ sealed interface ChatIntent {
     data class RevealMessage(val id: String) : ChatIntent
 }
 
-@HiltViewModel
-class ChatViewModel @Inject constructor(
+class ChatViewModel(
     private val chatDao: ChatDao,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -28,14 +25,16 @@ class ChatViewModel @Inject constructor(
 
     private val _inputText = MutableStateFlow("")
 
-    val state: StateFlow<ChatState> = chatDao.getMessagesForChat(chatId)
-        .map { entities ->
+    val state: StateFlow<ChatState> =
+        combine(
+            chatDao.getMessagesForChat(chatId),
+            _inputText
+        ) { entities, input ->
             ChatState(
                 messages = entities.map { it.toModel() },
-                inputText = _inputText.value
+                inputText = input
             )
-        }
-        .stateIn(
+        }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = ChatState(isLoading = true)
