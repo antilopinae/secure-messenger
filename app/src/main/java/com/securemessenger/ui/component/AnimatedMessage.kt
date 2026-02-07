@@ -107,9 +107,7 @@ fun AnimatedMessageCard(
                 downloadProgress++
             }
             messageState = MessageState.Visible(
-                text = "Modern Jetpack Compose allows you to create incredibly smooth interfaces. " +
-                        "This card is built using design tokens for easy maintenance. " +
-                        "All paddings, durations, and colors are moved to a separate config object."
+                text = "TODO ADD TEXT"
             )
         }
     }

@@ -40,7 +40,6 @@ fun ChatScreen(
     )
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatContent(

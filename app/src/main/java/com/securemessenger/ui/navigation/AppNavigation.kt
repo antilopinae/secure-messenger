@@ -32,7 +32,6 @@ fun AppNavigation(viewModel: MainActivityViewModel) {
                 composable(Screen.ChatList.route) {
                     MainScreen(
                         navController = navController,
-                        action = viewModel::action,
                         event = mainScreenEvent,
                         onOpenDrawer = onMenuClick
                     )

@@ -1,5 +1,7 @@
 package com.securemessenger.ui.event
 
+import com.securemessenger.ui.viewmodel.PreviewChatModel
+
 data class MainScreenEvent(
-    val userList: MutableList<String>? = null,
+    val chats: List<PreviewChatModel>
 )

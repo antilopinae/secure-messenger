@@ -3,7 +3,6 @@ package com.securemessenger.data.db
 import android.content.*
 import androidx.room.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.count
 import net.zetetic.database.sqlcipher.*
 
 @Database(
@@ -32,9 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
                 INSTANCE = instance
 
                 scope.launch(Dispatchers.IO) {
-                    if (instance.chatDao().getAllChats().count() == 0) {
-                        seedDatabase(instance.chatDao())
-                    }
+                    seedDatabase(instance.chatDao())
                 }
 
                 instance

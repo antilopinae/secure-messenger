@@ -21,7 +21,6 @@ import com.securemessenger.ui.theme.*
 @Composable
 fun MainScreen(
     navController: NavHostController,
-    action: (MainScreenAction) -> Unit,
     event: MainScreenEvent,
     onOpenDrawer: () -> Unit
 ) {
@@ -70,25 +69,22 @@ fun MainScreen(
                 .padding(paddingValues)
                 .background(Color.Black)
         ) {
-            SystemStatusHeader(nodesActive = event.userList?.size ?: 0)
+            SystemStatusHeader(nodesActive = event.chats.size)
 
-            val users = event.userList ?: emptyList()
-
-            if (users.isEmpty()) {
+            if (event.chats.isEmpty()) {
                 EmptyChatsPlaceholder()
             } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(vertical = 8.dp)
                 ) {
-                    items(users) { user ->
+                    items(event.chats) { chat ->
                         ChatItem(
-                            userName = user,
+                            userName = chat.title,
                             lastMessage = "Encrypted packet...",
                             time = "12:45",
                             onClick = {
-                                action(MainScreenAction.SelectUser(user))
-                                navController.navigate(Screen.Chat.createRoute(user))
+                                navController.navigate(Screen.Chat.createRoute(chat.id))
                             }
                         )
                     }

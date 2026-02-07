@@ -12,19 +12,14 @@ class MainActivityViewModel(
         dao.getAllChats()
             .map { chats ->
                 MainScreenEvent(
-                    userList = chats.map { it.chatName }.toMutableList()
+                    chats = chats.map {
+                        PreviewChatModel(id = it.chatId, title = it.chatName)
+                    }
                 )
             }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
-                initialValue = MainScreenEvent(mutableListOf())
+                initialValue = MainScreenEvent(emptyList())
             )
-
-    fun action(event: MainScreenAction) {
-        when (event) {
-            is MainScreenAction.SelectUser -> {}
-            is MainScreenAction.SendMessage -> {}
-        }
-    }
 }
