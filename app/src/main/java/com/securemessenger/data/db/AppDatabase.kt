@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.count
 import net.zetetic.database.sqlcipher.*
 
 @Database(
-    entities = [ParticipantEntity::class, ChatEntity::class, MessageEntity::class], version = 1
+    entities = [ParticipantEntity::class, ChatEntity::class, MessageEntity::class],
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun chatDao(): ChatDao
@@ -18,10 +20,6 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context, scope: CoroutineScope): AppDatabase {
             return INSTANCE ?: synchronized(this) {
-//                System.loadLibrary("sqlcipher")
-
-                val dbFile = context.getDatabasePath("secure_messenger.db")
-
                 val password = "super_secret_password"
                 val passphrase = password.toByteArray(Charsets.UTF_8)
 
@@ -29,7 +27,7 @@ abstract class AppDatabase : RoomDatabase() {
 
                 val instance = Room.databaseBuilder(
                     context.applicationContext, AppDatabase::class.java, "secure_messenger.db"
-                ).openHelperFactory(factory).build()
+                ).openHelperFactory(factory).fallbackToDestructiveMigration().build()
 
                 INSTANCE = instance
 

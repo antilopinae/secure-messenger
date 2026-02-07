@@ -2,7 +2,13 @@ package com.securemessenger.data.db
 
 import androidx.room.*
 
-@Entity(tableName = "participants")
+@Entity(
+    tableName = "participants",
+    indices = [
+        Index("ed25519PublicKey"),
+        Index("x25519PublicKey")
+    ]
+)
 data class ParticipantEntity(
     @PrimaryKey val nodeId: String,
     val name: String,

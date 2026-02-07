@@ -9,17 +9,26 @@ import com.securemessenger.data.model.*
         ForeignKey(
             entity = ChatEntity::class,
             parentColumns = ["chatId"],
-            childColumns = ["chatId"]
+            childColumns = ["chatId"],
+            onDelete = ForeignKey.CASCADE
         )
+    ],
+    indices = [
+//        Index("chatId"),
+        Index("timestamp")
     ]
 )
 data class MessageEntity(
     @PrimaryKey val id: String,
+
+    @ColumnInfo(index = true)
     val chatId: String,
+
     val senderId: String,
     val senderName: String,
     val text: String,
     val timestamp: Long,
+
     val state: String
 )
 

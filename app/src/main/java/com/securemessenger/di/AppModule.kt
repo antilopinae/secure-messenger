@@ -10,7 +10,6 @@ import org.koin.dsl.module
 
 
 val appModule = module {
-
     single<CoroutineScope> {
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }
@@ -27,7 +26,7 @@ val appModule = module {
     }
 
     viewModel {
-        MainActivityViewModel(get())
+        MainActivityViewModel(dao = get())
     }
 
     viewModel {

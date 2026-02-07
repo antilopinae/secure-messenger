@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.*
 class MainActivityViewModel(
     private val dao: ChatDao
 ) : ViewModel() {
-
     val mainScreenEvent: StateFlow<MainScreenEvent> =
         dao.getAllChats()
             .map { chats ->

@@ -10,7 +10,7 @@ task buildGoMobile(type: Exec) {
 
     def outputAar = "${project.projectDir}/libs/gobackend.aar"
 
-    executable 'C:/Users/maews/go/bin/gomobile.exe'
+    executable '/Users/antilopa/go/bin/gomobile'
     args 'bind', '-v', '-target=android', '-androidapi=21', '-o', outputAar, './pkg/mobile'
 
     doFirst {
@@ -78,9 +78,9 @@ dependencies {
 
     implementation(libs.sqlcipher.android)
 
+    ksp(libs.room.compiler)
 
-
-    implementation libs.javapoet
+//    implementation libs.javapoet
 
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 

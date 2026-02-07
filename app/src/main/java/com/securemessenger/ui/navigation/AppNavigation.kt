@@ -45,6 +45,7 @@ fun AppNavigation(viewModel: MainActivityViewModel) {
                     )
                 ) {
                     ChatScreen(
+                        "12",
                         onBack = {
                             navController.popBackStack()
                         }

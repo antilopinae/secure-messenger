@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.*
 import androidx.compose.material.icons.*
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -56,7 +58,11 @@ fun ChatContent(
                 title = { Text("SECURE NODE", color = Color.White, fontSize = 18.sp) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = null, tint = Color.White)
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black)
@@ -121,7 +127,7 @@ fun ChatInput(
             onClick = onSend,
             modifier = Modifier.background(AccentCyan, CircleShape)
         ) {
-            Icon(Icons.Default.Send, contentDescription = null, tint = Color.Black)
+            Icon(Icons.AutoMirrored.Filled.Send, contentDescription = null, tint = Color.Black)
         }
     }
 }
