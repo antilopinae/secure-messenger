@@ -39,15 +39,12 @@ fun AppNavigation(viewModel: MainActivityViewModel) {
 
                 composable(
                     route = Screen.Chat.route,
-                    arguments = listOf(
-                        navArgument("chatId") { type = NavType.StringType }
-                    )
-                ) {
+                    arguments = listOf(navArgument("chatId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val chatId = backStackEntry.arguments?.getString("chatId") ?: return@composable
                     ChatScreen(
-                        "12",
-                        onBack = {
-                            navController.popBackStack()
-                        }
+                        chatId = chatId,
+                        onBack = { navController.popBackStack() }
                     )
                 }
             }

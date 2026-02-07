@@ -80,8 +80,6 @@ dependencies {
 
     ksp(libs.room.compiler)
 
-//    implementation libs.javapoet
-
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     testImplementation libs.junit

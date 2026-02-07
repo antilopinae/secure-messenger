@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package securemessenger;
+option go_package = "./pb";
+
+service Messenger {
+  // Регистрация и аутентификация: сервер присылает случайные байты,
+  // клиент подписывает их своим Ed25519 ключом.
+  rpc GetChallenge(ChallengeRequest) returns (ChallengeResponse);
+  rpc Authenticate(AuthRequest) returns (AuthResponse);
+
+  // Основной канал связи. После вызова клиент начинает получать сообщения.
+  rpc Subscribe(SubscribeRequest) returns (stream MessagePacket);
+
+  // Отправка данных (Слой 4 в твоем дизайне)
+  rpc SendPacket(MessagePacket) returns (SendResponse);
+}
+
+message ChallengeRequest {
+  string node_id = 1;
+}
+
+message ChallengeResponse {
+  bytes nonce = 1;
+}
+
+message AuthRequest {
+  string node_id = 1;
+  bytes signature = 2; // Подпись nonce из ChallengeResponse
+  bytes public_key = 3;
+}
+
+message AuthResponse {
+  string session_token = 1;
+}
+
+message SubscribeRequest {
+  string session_token = 1;
+}
+
+message MessagePacket {
+  string target_node_id = 1; // Кому доставить
+  string sender_node_id = 2; // От кого
+  bytes payload = 3;         // Слой 3 (зашифрованный и подписанный отправителем)
+  bytes signature = 4;       // Подпись Слоя 4 (для сервера)
+}
+
+message SendResponse {
+  bool delivered = 1;
+  string error = 2;
+}
