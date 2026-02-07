@@ -1,34 +1,39 @@
 package com.securemessenger.di
 
-import android.content.*
+import android.content.Context
 import com.securemessenger.data.db.*
-import dagger.*
-import dagger.hilt.*
-import dagger.hilt.android.qualifiers.*
-import dagger.hilt.components.*
+import com.securemessenger.ui.viewmodel.*
 import kotlinx.coroutines.*
-import javax.inject.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
 
-    @Provides
-    @Singleton
-    fun provideApplicationScope(): CoroutineScope =
+val appModule = module {
+
+    single<CoroutineScope> {
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
-
-    @Provides
-    @Singleton
-    fun provideDatabase(
-        @ApplicationContext context: Context,
-        scope: CoroutineScope
-    ): AppDatabase {
-        return AppDatabase.getDatabase(context, scope)
     }
 
-    @Provides
-    fun provideChatDao(database: AppDatabase): ChatDao {
-        return database.chatDao()
+    single<AppDatabase> {
+        AppDatabase.getDatabase(
+            context = androidContext(),
+            scope = get()
+        )
+    }
+
+    single<ChatDao> {
+        get<AppDatabase>().chatDao()
+    }
+
+    viewModel {
+        MainActivityViewModel(get())
+    }
+
+    viewModel {
+        ChatViewModel(
+            chatDao = get(),
+            savedStateHandle = get()
+        )
     }
 }

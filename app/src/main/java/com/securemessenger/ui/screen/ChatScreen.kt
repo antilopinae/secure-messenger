@@ -12,17 +12,23 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.tooling.preview.*
 import androidx.compose.ui.unit.*
-import androidx.hilt.navigation.compose.*
+import androidx.lifecycle.SavedStateHandle
 import com.securemessenger.data.model.*
 import com.securemessenger.ui.component.*
 import com.securemessenger.ui.theme.*
 import com.securemessenger.ui.viewmodel.*
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun ChatScreen(
-    viewModel: ChatViewModel = hiltViewModel(),
+    chatId: String,
     onBack: () -> Unit
 ) {
+    val viewModel: ChatViewModel = koinViewModel(
+        parameters = { parametersOf(SavedStateHandle(mapOf("chatId" to chatId))) }
+    )
+
     val state by viewModel.state.collectAsState()
 
     ChatContent(
@@ -31,6 +37,7 @@ fun ChatScreen(
         onIntent = viewModel::handleIntent
     )
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

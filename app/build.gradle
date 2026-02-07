@@ -2,8 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt)
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
 }
 
 task buildGoMobile(type: Exec) {
@@ -11,7 +10,7 @@ task buildGoMobile(type: Exec) {
 
     def outputAar = "${project.projectDir}/libs/gobackend.aar"
 
-    executable '/Users/antilopa/go/bin/gomobile'
+    executable 'C:/Users/maews/go/bin/gomobile.exe'
     args 'bind', '-v', '-target=android', '-androidapi=21', '-o', outputAar, './pkg/mobile'
 
     doFirst {
@@ -69,16 +68,17 @@ dependencies {
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    kapt(libs.room.compiler)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 
     implementation(libs.sqlite)
     implementation(libs.sqlite.framework)
 
     implementation(libs.sqlcipher.android)
 
-    implementation libs.hilt.android
-    implementation libs.hilt.compose
-    kapt(libs.hilt.compiler)
+
 
     implementation libs.javapoet
 
