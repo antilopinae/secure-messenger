@@ -7,6 +7,10 @@ import (
 	"fmt"
 	"sync"
 
+	"database/sql"
+
+	_ "modernc.org/sqlite"
+
 	pb "securemessenger/pb"
 )
 
@@ -18,6 +22,8 @@ type NodeSession struct {
 
 type MessengerServer struct {
 	pb.UnimplementedMessengerServer
+
+	db *sql.DB
 
 	// Хранилище публичных ключей (в реале - БД)
 	// NodeID -> ed25519.PublicKey
@@ -32,12 +38,39 @@ type MessengerServer struct {
 	mu sync.RWMutex
 }
 
-func NewServer() *MessengerServer {
-	return &MessengerServer{
-		nodes:         make(map[string]ed25519.PublicKey),
-		activeStreams: make(map[string]chan *pb.MessagePacket),
-		challenges:    make(map[string][]byte),
+func NewServer(dbPath string) (*MessengerServer, error) {
+	db, err := sql.Open("sqlite", dbPath)
+	if err != nil {
+		return nil, err
 	}
+
+	// Создаем таблицы:
+	// nodes - белый список публичных ключей
+	// offline_packets - временное хранилище (TTL реализуем позже)
+	query := `
+    CREATE TABLE IF NOT EXISTS nodes (
+        node_id TEXT PRIMARY KEY,
+        pub_key BLOB
+    );
+    CREATE TABLE IF NOT EXISTS offline_packets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        target_id TEXT,
+        sender_id TEXT,
+        payload BLOB,
+        signature BLOB,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    );`
+
+	if _, err := db.Exec(query); err != nil {
+		return nil, err
+	}
+
+	return &MessengerServer{
+		db:            db,
+		activeStreams: make(map[string]chan *pb.MessagePacket), // Было
+		challenges:    make(map[string][]byte),                 // ДОБАВИТЬ ЭТО
+		nodes:         make(map[string]ed25519.PublicKey),      // И ЭТО
+	}, nil
 }
 
 // GetChallenge генерирует случайное число для проверки владения ключом
@@ -79,6 +112,19 @@ func (s *MessengerServer) Authenticate(ctx context.Context, req *pb.AuthRequest)
 func (s *MessengerServer) Subscribe(req *pb.SubscribeRequest, stream pb.Messenger_SubscribeServer) error {
 	nodeID := req.SessionToken // Упрощение
 
+	// 1. Проверяем наличие оффлайн сообщений
+	rows, err := s.db.Query("SELECT sender_id, payload, signature FROM offline_packets WHERE target_id = ?", nodeID)
+	if err == nil {
+		for rows.Next() {
+			var p pb.MessagePacket
+			p.TargetNodeId = nodeID
+			if err := rows.Scan(&p.SenderNodeId, &p.Payload, &p.Signature); err == nil {
+				stream.Send(&p)
+			}
+		}
+		s.db.Exec("DELETE FROM offline_packets WHERE target_id = ?", nodeID)
+	}
+
 	s.mu.Lock()
 	packetChan := make(chan *pb.MessagePacket, 100)
 	s.activeStreams[nodeID] = packetChan
@@ -108,25 +154,23 @@ func (s *MessengerServer) Subscribe(req *pb.SubscribeRequest, stream pb.Messenge
 // SendPacket принимает пакет и перекладывает его в канал получателя
 func (s *MessengerServer) SendPacket(ctx context.Context, packet *pb.MessagePacket) (*pb.SendResponse, error) {
 	s.mu.RLock()
-	defer s.mu.RUnlock()
-
-	// 1. Проверяем подпись отправителя (Слой 4)
-	pubKey, ok := s.nodes[packet.SenderNodeId]
-	if !ok {
-		return &pb.SendResponse{Delivered: false, Error: "unknown sender"}, nil
-	}
-
-	// В реальности подпись проверяется от payload + метаданные
-	if !ed25519.Verify(pubKey, packet.Payload, packet.Signature) {
-		return &pb.SendResponse{Delivered: false, Error: "bad L4 signature"}, nil
-	}
-
-	// 2. Ищем получателя и доставляем в его стрим
 	targetChan, online := s.activeStreams[packet.TargetNodeId]
-	if !online {
-		return &pb.SendResponse{Delivered: false, Error: "target offline"}, nil
+	s.mu.RUnlock()
+
+	if online {
+		targetChan <- packet
+		return &pb.SendResponse{Delivered: true}, nil
 	}
 
-	targetChan <- packet
-	return &pb.SendResponse{Delivered: true}, nil
+	// Если оффлайн — сохраняем в базу
+	_, err := s.db.Exec(`
+		INSERT INTO offline_packets (target_id, sender_id, payload, signature) 
+		VALUES (?, ?, ?, ?)`,
+		packet.TargetNodeId, packet.SenderNodeId, packet.Payload, packet.Signature)
+
+	if err != nil {
+		return &pb.SendResponse{Delivered: false, Error: "db error"}, err
+	}
+
+	return &pb.SendResponse{Delivered: false, Error: "stored offline"}, nil
 }

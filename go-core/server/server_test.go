@@ -22,7 +22,10 @@ var lis *bufconn.Listener
 func initGRPCServer() *MessengerServer {
 	lis = bufconn.Listen(bufSize)
 	s := grpc.NewServer()
-	srv := NewServer()
+	srv, err := NewServer("/tmp/server.db")
+	if err != nil {
+		panic("Failed to init server: " + err.Error())
+	}
 	pb.RegisterMessengerServer(s, srv)
 	go func() {
 		if err := s.Serve(lis); err != nil {
