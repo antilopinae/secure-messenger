@@ -49,3 +49,18 @@ message SendResponse {
   bool delivered = 1;
   string error = 2;
 }
+
+message Particle {
+  uint32 x = 1;              // Координата X (0-255)
+  bytes ephemeral_pub = 2;   // Публичный ключ X25519
+  bytes encrypted_y = 3;     // Зашифрованная координата Y (1 байт внутри bytes)
+}
+
+message MessageBundle {
+  string chat_id = 1;
+  string message_id = 2;
+  string sender_id = 3;
+  int64 timestamp = 4;
+  repeated Particle particles = 5;
+  bytes signature = 6;       // Подпись Ed25519
+}

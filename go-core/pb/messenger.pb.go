@@ -377,6 +377,150 @@ func (x *SendResponse) GetError() string {
 	return ""
 }
 
+type Particle struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	X             uint32                 `protobuf:"varint,1,opt,name=x,proto3" json:"x,omitempty"`                                          // Координата X (0-255)
+	EphemeralPub  []byte                 `protobuf:"bytes,2,opt,name=ephemeral_pub,json=ephemeralPub,proto3" json:"ephemeral_pub,omitempty"` // Публичный ключ X25519
+	EncryptedY    []byte                 `protobuf:"bytes,3,opt,name=encrypted_y,json=encryptedY,proto3" json:"encrypted_y,omitempty"`       // Зашифрованная координата Y (1 байт внутри bytes)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Particle) Reset() {
+	*x = Particle{}
+	mi := &file_protocol_messenger_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Particle) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Particle) ProtoMessage() {}
+
+func (x *Particle) ProtoReflect() protoreflect.Message {
+	mi := &file_protocol_messenger_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Particle.ProtoReflect.Descriptor instead.
+func (*Particle) Descriptor() ([]byte, []int) {
+	return file_protocol_messenger_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *Particle) GetX() uint32 {
+	if x != nil {
+		return x.X
+	}
+	return 0
+}
+
+func (x *Particle) GetEphemeralPub() []byte {
+	if x != nil {
+		return x.EphemeralPub
+	}
+	return nil
+}
+
+func (x *Particle) GetEncryptedY() []byte {
+	if x != nil {
+		return x.EncryptedY
+	}
+	return nil
+}
+
+type MessageBundle struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChatId        string                 `protobuf:"bytes,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
+	MessageId     string                 `protobuf:"bytes,2,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
+	SenderId      string                 `protobuf:"bytes,3,opt,name=sender_id,json=senderId,proto3" json:"sender_id,omitempty"`
+	Timestamp     int64                  `protobuf:"varint,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Particles     []*Particle            `protobuf:"bytes,5,rep,name=particles,proto3" json:"particles,omitempty"`
+	Signature     []byte                 `protobuf:"bytes,6,opt,name=signature,proto3" json:"signature,omitempty"` // Подпись Ed25519
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MessageBundle) Reset() {
+	*x = MessageBundle{}
+	mi := &file_protocol_messenger_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MessageBundle) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MessageBundle) ProtoMessage() {}
+
+func (x *MessageBundle) ProtoReflect() protoreflect.Message {
+	mi := &file_protocol_messenger_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MessageBundle.ProtoReflect.Descriptor instead.
+func (*MessageBundle) Descriptor() ([]byte, []int) {
+	return file_protocol_messenger_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *MessageBundle) GetChatId() string {
+	if x != nil {
+		return x.ChatId
+	}
+	return ""
+}
+
+func (x *MessageBundle) GetMessageId() string {
+	if x != nil {
+		return x.MessageId
+	}
+	return ""
+}
+
+func (x *MessageBundle) GetSenderId() string {
+	if x != nil {
+		return x.SenderId
+	}
+	return ""
+}
+
+func (x *MessageBundle) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
+func (x *MessageBundle) GetParticles() []*Particle {
+	if x != nil {
+		return x.Particles
+	}
+	return nil
+}
+
+func (x *MessageBundle) GetSignature() []byte {
+	if x != nil {
+		return x.Signature
+	}
+	return nil
+}
+
 var File_protocol_messenger_proto protoreflect.FileDescriptor
 
 const file_protocol_messenger_proto_rawDesc = "" +
@@ -402,7 +546,20 @@ const file_protocol_messenger_proto_rawDesc = "" +
 	"\tsignature\x18\x04 \x01(\fR\tsignature\"B\n" +
 	"\fSendResponse\x12\x1c\n" +
 	"\tdelivered\x18\x01 \x01(\bR\tdelivered\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error2\xce\x02\n" +
+	"\x05error\x18\x02 \x01(\tR\x05error\"^\n" +
+	"\bParticle\x12\f\n" +
+	"\x01x\x18\x01 \x01(\rR\x01x\x12#\n" +
+	"\rephemeral_pub\x18\x02 \x01(\fR\fephemeralPub\x12\x1f\n" +
+	"\vencrypted_y\x18\x03 \x01(\fR\n" +
+	"encryptedY\"\xd9\x01\n" +
+	"\rMessageBundle\x12\x17\n" +
+	"\achat_id\x18\x01 \x01(\tR\x06chatId\x12\x1d\n" +
+	"\n" +
+	"message_id\x18\x02 \x01(\tR\tmessageId\x12\x1b\n" +
+	"\tsender_id\x18\x03 \x01(\tR\bsenderId\x12\x1c\n" +
+	"\ttimestamp\x18\x04 \x01(\x03R\ttimestamp\x127\n" +
+	"\tparticles\x18\x05 \x03(\v2\x19.securemessenger.ParticleR\tparticles\x12\x1c\n" +
+	"\tsignature\x18\x06 \x01(\fR\tsignature2\xce\x02\n" +
 	"\tMessenger\x12U\n" +
 	"\fGetChallenge\x12!.securemessenger.ChallengeRequest\x1a\".securemessenger.ChallengeResponse\x12K\n" +
 	"\fAuthenticate\x12\x1c.securemessenger.AuthRequest\x1a\x1d.securemessenger.AuthResponse\x12P\n" +
@@ -422,7 +579,7 @@ func file_protocol_messenger_proto_rawDescGZIP() []byte {
 	return file_protocol_messenger_proto_rawDescData
 }
 
-var file_protocol_messenger_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_protocol_messenger_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_protocol_messenger_proto_goTypes = []any{
 	(*ChallengeRequest)(nil),  // 0: securemessenger.ChallengeRequest
 	(*ChallengeResponse)(nil), // 1: securemessenger.ChallengeResponse
@@ -431,21 +588,24 @@ var file_protocol_messenger_proto_goTypes = []any{
 	(*SubscribeRequest)(nil),  // 4: securemessenger.SubscribeRequest
 	(*MessagePacket)(nil),     // 5: securemessenger.MessagePacket
 	(*SendResponse)(nil),      // 6: securemessenger.SendResponse
+	(*Particle)(nil),          // 7: securemessenger.Particle
+	(*MessageBundle)(nil),     // 8: securemessenger.MessageBundle
 }
 var file_protocol_messenger_proto_depIdxs = []int32{
-	0, // 0: securemessenger.Messenger.GetChallenge:input_type -> securemessenger.ChallengeRequest
-	2, // 1: securemessenger.Messenger.Authenticate:input_type -> securemessenger.AuthRequest
-	4, // 2: securemessenger.Messenger.Subscribe:input_type -> securemessenger.SubscribeRequest
-	5, // 3: securemessenger.Messenger.SendPacket:input_type -> securemessenger.MessagePacket
-	1, // 4: securemessenger.Messenger.GetChallenge:output_type -> securemessenger.ChallengeResponse
-	3, // 5: securemessenger.Messenger.Authenticate:output_type -> securemessenger.AuthResponse
-	5, // 6: securemessenger.Messenger.Subscribe:output_type -> securemessenger.MessagePacket
-	6, // 7: securemessenger.Messenger.SendPacket:output_type -> securemessenger.SendResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	7, // 0: securemessenger.MessageBundle.particles:type_name -> securemessenger.Particle
+	0, // 1: securemessenger.Messenger.GetChallenge:input_type -> securemessenger.ChallengeRequest
+	2, // 2: securemessenger.Messenger.Authenticate:input_type -> securemessenger.AuthRequest
+	4, // 3: securemessenger.Messenger.Subscribe:input_type -> securemessenger.SubscribeRequest
+	5, // 4: securemessenger.Messenger.SendPacket:input_type -> securemessenger.MessagePacket
+	1, // 5: securemessenger.Messenger.GetChallenge:output_type -> securemessenger.ChallengeResponse
+	3, // 6: securemessenger.Messenger.Authenticate:output_type -> securemessenger.AuthResponse
+	5, // 7: securemessenger.Messenger.Subscribe:output_type -> securemessenger.MessagePacket
+	6, // 8: securemessenger.Messenger.SendPacket:output_type -> securemessenger.SendResponse
+	5, // [5:9] is the sub-list for method output_type
+	1, // [1:5] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_protocol_messenger_proto_init() }
@@ -459,7 +619,7 @@ func file_protocol_messenger_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_protocol_messenger_proto_rawDesc), len(file_protocol_messenger_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
