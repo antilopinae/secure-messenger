@@ -33,4 +33,16 @@ interface ChatDao {
 
     @Query("SELECT * FROM messages WHERE chatId = :chatId ORDER BY timestamp DESC")
     fun getMessagesForChat(chatId: String): Flow<List<MessageEntity>>
+
+    @Query(
+        """
+    SELECT p.* FROM participants p 
+    INNER JOIN chat_participants cp ON p.nodeId = cp.nodeId 
+    WHERE cp.chatId = :chatId
+"""
+    )
+    suspend fun getParticipantsForChat(chatId: String): List<ParticipantEntity>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertChatParticipant(crossRef: ChatParticipantCrossRef)
 }

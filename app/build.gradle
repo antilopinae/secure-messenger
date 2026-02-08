@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+
+    alias(libs.plugins.kotlin.serialization)
 }
 
 task buildGoMobile(type: Exec) {
@@ -11,7 +13,7 @@ task buildGoMobile(type: Exec) {
     def outputAar = "${project.projectDir}/libs/gobackend.aar"
 
     executable '/Users/antilopa/go/bin/gomobile'
-    args 'bind', '-v', '-target=android', '-androidapi=21', '-o', outputAar, './mobile'
+    args 'bind', '-v', '-target=android', '-androidapi=21', '-o', outputAar, './mobile/pkg'
 
     doFirst {
         mkdir "${project.projectDir}/libs"
@@ -79,6 +81,8 @@ dependencies {
     implementation(libs.sqlcipher.android)
 
     ksp(libs.room.compiler)
+
+    implementation(libs.kotlinx.serialization.json)
 
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 

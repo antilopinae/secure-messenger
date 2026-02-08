@@ -17,6 +17,7 @@ sqlcipher_android = "4.5.6"
 koin = "3.5.6"
 koinCompose = "3.5.6"
 ksp = "2.3.0"
+kotlinx-serialization = "1.6.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,7 +43,7 @@ koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", versi
 javapoet = { group = "com.squareup", name = "javapoet", version.ref = "javapoet" }
 
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-ktx     = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
@@ -50,9 +51,12 @@ sqlite-framework = { module = "androidx.sqlite:sqlite-framework", version.ref = 
 
 sqlcipher-android = { module = "net.zetetic:sqlcipher-android", version.ref = "sqlcipher_android" }
 
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 

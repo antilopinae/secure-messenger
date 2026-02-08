@@ -1,6 +1,9 @@
 package com.securemessenger.di
 
 import com.securemessenger.data.db.*
+import com.securemessenger.data.go.GoBridgeConnector
+import com.securemessenger.data.repository.ChatRepository
+import com.securemessenger.data.repository.ChatRepositoryImpl
 import com.securemessenger.ui.viewmodel.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.koin.androidContext
@@ -23,13 +26,17 @@ val appModule = module {
         get<AppDatabase>().chatDao()
     }
 
+    single { GoBridgeConnector(get(), get()) }
+
+    single<ChatRepository> { ChatRepositoryImpl(get(), get()) }
+
     viewModel {
         MainActivityViewModel(dao = get())
     }
 
     viewModel {
         ChatViewModel(
-            chatDao = get(),
+            get(),
             savedStateHandle = get()
         )
     }

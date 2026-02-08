@@ -6,7 +6,7 @@ import kotlinx.coroutines.*
 import net.zetetic.database.sqlcipher.*
 
 @Database(
-    entities = [ParticipantEntity::class, ChatEntity::class, MessageEntity::class],
+    entities = [ParticipantEntity::class, ChatEntity::class, MessageEntity::class, ChatParticipantCrossRef::class],
     version = 1,
     exportSchema = false
 )
@@ -48,8 +48,10 @@ abstract class AppDatabase : RoomDatabase() {
             dao.insertParticipant(p2)
             dao.insertParticipant(p3)
 
+            val mainChatId = "chat_main"
+
             val mainChat = ChatEntity(
-                "chat_main",
+                mainChatId,
                 "SECURE CORE GROUP",
                 "Encrypted data packet...",
                 System.currentTimeMillis()
@@ -89,6 +91,10 @@ abstract class AppDatabase : RoomDatabase() {
                     "VISIBLE"
                 )
             )
+
+            dao.insertChatParticipant(ChatParticipantCrossRef(mainChatId, "node_alice"))
+            dao.insertChatParticipant(ChatParticipantCrossRef(mainChatId, "node_bob"))
+            dao.insertChatParticipant(ChatParticipantCrossRef(mainChatId, "node_charlie"))
         }
     }
 }
