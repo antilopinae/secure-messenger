@@ -10,8 +10,16 @@ import androidx.room.*
     ]
 )
 data class ParticipantEntity(
-    @PrimaryKey val nodeId: String,
+    @PrimaryKey
+    @ColumnInfo(name = "nodeId")
+    val nodeId: String,
+
+    @ColumnInfo(name = "name")
     val name: String,
+
+    @ColumnInfo(name = "ed25519PublicKey")
     val ed25519PublicKey: String,
+
+    @ColumnInfo(name = "x25519PublicKey")
     val x25519PublicKey: String
 )

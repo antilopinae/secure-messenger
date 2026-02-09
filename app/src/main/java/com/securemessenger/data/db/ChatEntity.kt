@@ -11,7 +11,12 @@ data class ChatEntity(
     @ColumnInfo(name = "chatId")
     val chatId: String,
 
+    @ColumnInfo(name = "chatName")
     val chatName: String,
+
+    @ColumnInfo(name = "lastMessage")
     val lastMessage: String,
+
+    @ColumnInfo(name = "timestamp")
     val timestamp: Long
 )

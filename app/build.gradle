@@ -12,7 +12,7 @@ task buildGoMobile(type: Exec) {
 
     def outputAar = "${project.projectDir}/libs/gobackend.aar"
 
-    executable '/Users/antilopa/go/bin/gomobile'
+    executable 'C:\\Users\\maews\\go\\bin\\gomobile.exe'
     args 'bind', '-v', '-target=android', '-androidapi=21', '-o', outputAar, './mobile/pkg'
 
     doFirst {
