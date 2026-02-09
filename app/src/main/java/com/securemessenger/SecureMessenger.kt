@@ -11,7 +11,7 @@ class SecureMessenger : Application() {
         super.onCreate()
 
         System.loadLibrary("sqlcipher")
-        System.loadLibrary("gobackend")
+//        System.loadLibrary("gobackend")
 
         startKoin {
             androidContext(this@SecureMessenger)

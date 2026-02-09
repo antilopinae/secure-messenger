@@ -7,7 +7,7 @@ import net.zetetic.database.sqlcipher.*
 
 @Database(
     entities = [ParticipantEntity::class, ChatEntity::class, MessageEntity::class, ChatParticipantCrossRef::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
